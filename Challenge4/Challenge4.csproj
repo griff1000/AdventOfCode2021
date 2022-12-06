@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Index.txt" />
+    <None Remove="Input.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Index.txt">
+    <Content Include="Input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
