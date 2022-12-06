@@ -20,8 +20,7 @@
                 var isMatch = row.CallNumber(numberCalled);
                 if (isMatch) isAnyMatch = true;
                 if (!isMatch || !row.IsBingo()) continue;
-                HasWon = true; // could raise events at this point
-                return true;
+                return HasWon = true; // could raise events at this point
             }
             return isAnyMatch && CheckColumns(); 
         }
@@ -32,8 +31,7 @@
             { 
                 var isBingo = Rows.Select(r => r.BoardNumbers.ElementAt(i)).All(e => e.Value);
                 if (!isBingo) continue;
-                HasWon = true; // could raise events at this point
-                return true;
+                return HasWon = true; // could raise events at this point
             }
             return false;
         }
