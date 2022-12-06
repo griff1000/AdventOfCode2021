@@ -11,24 +11,28 @@
 
         internal bool CallNumber(int numberCalled)
         {
-
+            // isAnyMatch is just a performance tweak to stop it checking columns
+            // for wins when the number didn't match in any of the rows.  It could
+            // be removed and functionally still work.
+            var isAnyMatch = false;
             foreach (var row in Rows)
             {
                 var isMatch = row.CallNumber(numberCalled);
+                if (isMatch) isAnyMatch = true;
                 if (!isMatch || !row.IsBingo()) continue;
-                HasWon = true;
+                HasWon = true; // could raise events at this point
                 return true;
             }
-            return CheckColumns();
+            return isAnyMatch && CheckColumns(); 
         }
 
         private bool CheckColumns()
         {
             for (var i = 0; i < 5; i++)
             { 
-                var isBingo = Rows.Select(r => r.Values.ElementAt(i)).All(e => e.Value);
+                var isBingo = Rows.Select(r => r.BoardNumbers.ElementAt(i)).All(e => e.Value);
                 if (!isBingo) continue;
-                HasWon = true;
+                HasWon = true; // could raise events at this point
                 return true;
             }
             return false;
@@ -37,7 +41,7 @@
         internal int CalculateScore()
         {
             return Rows
-                .SelectMany(r => r.Values)
+                .SelectMany(r => r.BoardNumbers)
                 .Where(v => !v.Value)
                 .Sum(v => v.Key);
         }

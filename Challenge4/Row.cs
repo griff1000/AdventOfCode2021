@@ -2,26 +2,26 @@
 {
     internal class Row
     {
-        internal Dictionary<int, bool> Values { get; }
+        internal Dictionary<int, bool> BoardNumbers { get; }
 
         internal Row(string numbersToAdd)
         {
             var numbers = numbersToAdd.Split(' ');
-            Values = new Dictionary<int, bool>(numbers
+            BoardNumbers = new Dictionary<int, bool>(numbers
                 .Where(n => !string.IsNullOrWhiteSpace(n))
                 .Select(n => new KeyValuePair<int,bool>(int.Parse(n), false)));
         }
 
         internal bool CallNumber(int number)
         {
-            if (!Values.ContainsKey(number)) return false;
-            Values[number] = true;
+            if (!BoardNumbers.ContainsKey(number)) return false;
+            BoardNumbers[number] = true;
             return true;
         }
 
         internal bool IsBingo()
         {
-            return Values.All(v => v.Value);
+            return BoardNumbers.All(v => v.Value);
         }
     }
 }
