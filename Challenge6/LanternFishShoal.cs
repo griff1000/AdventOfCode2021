@@ -1,11 +1,9 @@
 ﻿namespace Challenge6
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
+    /// <summary>
+    /// This is much more performant - it doesn't create new fish objects, it just keeps a
+    /// count of fish for each day of the timer and moves that count along accordingly
+    /// </summary>
     internal class LanternFishShoal
     {
         // Key is number of days, value is number of fish at that number of days
@@ -13,7 +11,7 @@
 
         internal LanternFishShoal()
         {
-            foreach (var i in Enumerable.Range(0,8))
+            foreach (var i in Enumerable.Range(0,9))
             {
                 TimerDaysAndCount[i] = 0;
             }
@@ -26,14 +24,19 @@
 
         internal void Age()
         {
+            // keep a record of the fish about to give birth
             var goingToGiveBirth = TimerDaysAndCount[0];
-            for (var i = 1; i < 8; i++)
+
+            for (var i = 1; i < 9; i++)
             {
+                // Move the counts of fish not about to give birth down a day
                 TimerDaysAndCount[i - 1] = TimerDaysAndCount[i];
             }
 
-            TimerDaysAndCount[7] = goingToGiveBirth; // new fish
-            TimerDaysAndCount[5] += goingToGiveBirth; // existing fish
+            // Add new fish
+            TimerDaysAndCount[8] = goingToGiveBirth; 
+            // Rest fish who just gave birth
+            TimerDaysAndCount[6] += goingToGiveBirth;
         }
 
         internal long Count => TimerDaysAndCount.Sum(x => x.Value);
