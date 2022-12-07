@@ -42,10 +42,15 @@
 
         private void MarkDiagonal(Coordinates coordinates)
         {
+            // Work out whether to go up left, down left, up right, down right
             var xStep = coordinates.Point1.X < coordinates.Point2.X ? 1 : -1;
             var yStep = coordinates.Point1.Y < coordinates.Point2.Y ? 1 : -1;
+            // Work out how far to go
             var distance = Math.Abs(coordinates.Point1.X - coordinates.Point2.X);
             Debug.Assert(distance == Math.Abs(coordinates.Point1.Y - coordinates.Point2.Y));
+            // Start from the first coordinate and work to the second one.  It's a 45 degree
+            // line so X and Y move by the same amount (albeit not necessarily in the same
+            // direction) each move
             var xLatest = coordinates.Point1.X;
             var yLatest = coordinates.Point1.Y;
             for (var i = 0; i <= distance; i++)
