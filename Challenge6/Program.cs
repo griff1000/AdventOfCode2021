@@ -27,16 +27,10 @@ var input = await File.ReadAllTextAsync("./Input.txt");
 
 // This is much more performant - it doesn't create new fish, it just keeps a count of fish
 // for each day of the timer
-var lanternFishShoal = new LanternFishShoal();
-foreach (var startingTimer in input.Split(',').Select(int.Parse))
-{
-    lanternFishShoal.AddFish(startingTimer);   
-}
 
-for (var day = 0; day < 256; day++)
-{
-    lanternFishShoal.Age();
-}
+var lanternFishShoal = new LanternFishShoal();
+input.Split(',').Select(int.Parse).ToList().ForEach(lanternFishShoal.AddFish);
+Enumerable.Range(0, 256).ToList().ForEach(_ => lanternFishShoal.Age());
 Console.WriteLine($"There are now {lanternFishShoal.Count} fish");
 
 #endregion

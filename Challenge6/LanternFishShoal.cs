@@ -7,14 +7,11 @@
     internal class LanternFishShoal
     {
         // Key is number of days, value is number of fish at that number of days
-        internal Dictionary<int, long> TimerDaysAndCount { get; } = new ();
+        private Dictionary<int, long> TimerDaysAndCount { get; } = new ();
 
         internal LanternFishShoal()
         {
-            foreach (var i in Enumerable.Range(0,9))
-            {
-                TimerDaysAndCount[i] = 0;
-            }
+            Enumerable.Range(0,9).ToList().ForEach(i => TimerDaysAndCount[i] = 0);
         }
 
         internal void AddFish(int timer)
@@ -33,9 +30,9 @@
                 TimerDaysAndCount[i - 1] = TimerDaysAndCount[i];
             }
 
-            // Add new fish
+            // Add new baby fish
             TimerDaysAndCount[8] = goingToGiveBirth; 
-            // Rest fish who just gave birth
+            // Reset fish who just gave birth
             TimerDaysAndCount[6] += goingToGiveBirth;
         }
 
